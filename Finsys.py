@@ -27833,7 +27833,7 @@ def main_sign_in():
                     btn1=Button(debitNote_canvas,text='Add Vendor', width=20,height=2,foreground="white",background="#1b3857",font='arial 12',command=add_VendorDN)
                     window_btn1 = debitNote_canvas.create_window(0, 0, anchor="nw", window=btn1, tags=("vnbutton2"))
                    
-                    #333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333{Report Tab}
+                    #333333333333333333333333333333333333333333333333333333333333333333333333333333333333333{Report Tab}
 
                     tab_report = ttk.Notebook(tab6)
                     tab6_1 =  ttk.Frame(tab_report)
