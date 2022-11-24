@@ -27595,7 +27595,8 @@ def main_sign_in():
                     tab_purchases.add(tab16_3,compound = LEFT, text ='Payment')
                     tab_purchases.add(tab16_4,compound = LEFT, text ='Debit Note')
                     tab_purchases.pack(expand = 1, fill ="both")
-                    ########################################################Debit Not#####################################################
+                    ########################################################Debit Note#####################################################
+                    #-------------------------------Debit Note-----------------------------#
                     tab16_4.grid_columnconfigure(0,weight=1)
                     tab16_4.grid_rowconfigure(0,weight=1)
 
@@ -27722,12 +27723,33 @@ def main_sign_in():
                     debitNote_scrollbar.config(command=debitNote_tree.yview)
                     debitNote_scrollbar.grid(row=0,column=2,sticky='ns')
 
-                    def add_VendorDN():
-                        main_frame_debitNote.grid_forget()
-                        vendorDN_frame = Frame(tab16_4)
-                        vendorDN_frame.grid(row=0,column=0,sticky='nsew')
+                    sql_dn="select * from auth_user where username=%s"
+                    sql_dn_val=(nm_ent.get(),)
+                    fbcursor.execute(sql_dn,sql_dn_val,)
+                    dn_dtl=fbcursor.fetchone()
 
-                        def vendorDN_responsive_widgets(event):
+
+                    c_sql_1 = "SELECT * FROM app1_debitnote where usr_id=%s"
+                    c_val_1 = (dn_dtl[0],)
+                    fbcursor.execute(c_sql_1,c_val_1,)
+                    c_data_1 = fbcursor.fetchall()
+
+                    count0 = 0
+                    for i in c_data_1:
+                        if True:
+                            debitNote_tree.insert(parent='',index='end',iid=i,text='',values=(i[5],i[1],i[2],i[13],i[11])) 
+                        else:
+                            pass
+                    count0 += 1
+
+
+                    ######################################################## Add Debit Note #####################################################
+                    def add_DN():
+                        main_frame_debitNote.grid_forget()
+                        addDN_frame = Frame(tab16_4)
+                        addDN_frame.grid(row=0,column=0,sticky='nsew')
+
+                        def addDN_responsive_widgets(event):
                             dwidth = event.width
                             dheight = event.height
                             dcanvas = event.widget
@@ -27738,7 +27760,7 @@ def main_sign_in():
                             y1 = dheight/14 
                             y2 = dheight/3.505
 
-                            dcanvas.coords("vdnpoly1",x1 + r1,y1,
+                            dcanvas.coords("adnpoly1",x1 + r1,y1,
                             x1 + r1,y1,
                             x2 - r1,y1,
                             x2 - r1,y1,     
@@ -27763,8 +27785,9 @@ def main_sign_in():
                             x1,y1,
                             )
 
-                            dcanvas.coords("vdnlabel1",dwidth/2.5,dheight/8.24)
-                            dcanvas.coords("vdnhline",dwidth/21,dheight/4.67,dwidth/1.055,dheight/4.67)
+                            dcanvas.coords("adnlabel1",dwidth/1.999,dheight/7.00)
+                            dcanvas.coords("adnhline",dwidth/21,dheight/4.67,dwidth/1.055,dheight/4.67)
+
 
                             r2 = 25
                             x11 = dwidth/63
@@ -27773,7 +27796,7 @@ def main_sign_in():
                             y21 = dheight/0.45
 
 
-                            dcanvas.coords("vdnpoly2",x11 + r2,y11,
+                            dcanvas.coords("adnpoly2",x11 + r2,y11,
                             x11 + r2,y11,
                             x21 - r2,y11,
                             x21 - r2,y11,     
@@ -27798,39 +27821,327 @@ def main_sign_in():
                             x11,y11,
                             )
 
-                            dcanvas.coords("vdnbutton1",dwidth/23,dheight/3.415)
+                            dcanvas.coords("adnbutton1",dwidth/23,dheight/3.415)
+                            dcanvas.coords("adnlabel3",dwidth/18.5,dheight/2.5)
+                            dcanvas.coords("adncombo1",dwidth/18.5,dheight/2.1)
+
+                            dcanvas.coords("ailabel6",dwidth/3.34,dheight/2.5)
+                            dcanvas.coords("aientry1",dwidth/3.34,dheight/2.1)
+
+                            dcanvas.coords("ailabel9",dwidth/18.5,dheight/1.6)
+                            dcanvas.coords("aientry2",dwidth/18.5,dheight/1.4)
+
+                            dcanvas.coords("ailabel29",dwidth/3.34,dheight/1.6)
+
+                            dcanvas.coords("ailabel10",dwidth/18.5,dheight/.97)
+                            dcanvas.coords("aicombo3",dwidth/18.5,dheight/.9)
+
+                            dcanvas.coords("adnlabelbill",dwidth/3.34,dheight/.97)
+                            dcanvas.coords("adncombobill",dwidth/3.34,dheight/.9)
+
+                            dcanvas.coords("adnlabelitem",dwidth/22,dheight/.77)
+                            dcanvas.coords("adnhlineitem",dwidth/22,dheight/.8,dwidth/1.055,dheight/.8)
+                            
+                            
+                            dcanvas.coords("ailabel2",dwidth/2.5,dheight/8.24)
+                            dcanvas.coords("ailabel3",dwidth/22.80,dheight/1.90)
+                            dcanvas.coords("ailabel4",dwidth/20.00,dheight/1.65)
+                            dcanvas.coords("ailabel5",dwidth/20.00,dheight/1.37)
+                            
+                            dcanvas.coords("ailabel7",dwidth/21.66 ,dheight/1.12)
+                            dcanvas.coords("ailabel8",dwidth/3.34,dheight/1.12)
+                            
+                            
+                            dcanvas.coords("ailabel11",dwidth/16.50,dheight/0.638)
+                            dcanvas.coords("ailabel12",dwidth/8.40,dheight/0.638)
+                            dcanvas.coords("ailabel13",dwidth/3.34,dheight/0.638)
+                            dcanvas.coords("ailabel14",dwidth/2.28,dheight/0.638)
+                            dcanvas.coords("ailabel15",dwidth/1.73,dheight/0.638)
+                            dcanvas.coords("ailabel16",dwidth/1.52,dheight/0.638)
+                            dcanvas.coords("ailabel17",dwidth/1.325,dheight/0.638)
+                            dcanvas.coords("ailabel18",dwidth/1.165,dheight/0.638)
+                            dcanvas.coords("ailabel19",dwidth/16.50,dheight/0.604)
+                            dcanvas.coords("ailabel20",dwidth/16.50,dheight/0.562)
+                            dcanvas.coords("ailabel21",dwidth/16.50,dheight/0.526)
+                            dcanvas.coords("ailabel22",dwidth/16.50,dheight/0.496)
+                            dcanvas.coords("ailabel23",dwidth/1.53,dheight/0.45)
+                            dcanvas.coords("ailabel24",dwidth/1.54,dheight/0.435)
+                            dcanvas.coords("ailabel25",dwidth/1.54,dheight/0.42)
+                            dcanvas.coords("ailabel26",dwidth/1.54,dheight/0.406)
+                            dcanvas.coords("ailabel27",dwidth/1.54,dheight/0.392)
+                            dcanvas.coords("ailabel28",dwidth/1.72,dheight/1.12)
+                            
 
                             
-                        vendorDN_canvas = Canvas(vendorDN_frame,height=700,bg='#2f516f',scrollregion=(0,0,700,1200))
+                            
+                            dcanvas.coords("aientry3",dwidth/4.00,dheight/0.604)
+                            dcanvas.coords("aientry4",dwidth/2.51,dheight/0.604)
+                            dcanvas.coords("aientry5",dwidth/1.8,dheight/0.604)
+                            dcanvas.coords("aientry6",dwidth/1.565,dheight/0.604)
+                            dcanvas.coords("aientry7",dwidth/1.357,dheight/0.604)
+                            dcanvas.coords("aientry8",dwidth/4.00,dheight/0.562)
+                            dcanvas.coords("aientry9",dwidth/4.00,dheight/0.526)
+                            dcanvas.coords("aientry10",dwidth/4.00,dheight/0.496)
+                            dcanvas.coords("aientry11",dwidth/2.51,dheight/0.562)
+                            dcanvas.coords("aientry12",dwidth/2.51,dheight/0.526)
+                            dcanvas.coords("aientry13",dwidth/2.51,dheight/0.496)
+                            dcanvas.coords("aientry14",dwidth/1.8,dheight/0.562)
+                            dcanvas.coords("aientry15",dwidth/1.8,dheight/0.526)
+                            dcanvas.coords("aientry16",dwidth/1.8,dheight/0.496)
+                            dcanvas.coords("aientry17",dwidth/1.565,dheight/0.562)
+                            dcanvas.coords("aientry18",dwidth/1.565,dheight/0.526)
+                            dcanvas.coords("aientry19",dwidth/1.565,dheight/0.496)
+                            dcanvas.coords("aientry20",dwidth/1.357,dheight/0.562)
+                            dcanvas.coords("aientry21",dwidth/1.357,dheight/0.526)
+                            dcanvas.coords("aientry22",dwidth/1.357,dheight/0.496)
+                            dcanvas.coords("aientry23",dwidth/1.33,dheight/0.452)
+                            dcanvas.coords("aientry24",dwidth/1.33,dheight/0.4365)
+                            dcanvas.coords("aientry25",dwidth/1.33,dheight/0.4215)
+                            dcanvas.coords("aientry26",dwidth/1.33,dheight/0.407)
+                            dcanvas.coords("aientry27",dwidth/1.33,dheight/0.393)
+                            dcanvas.coords("aientry19",dwidth/18.00,dheight/1.295)
+                            
 
-                        vendorDN_frame.grid_rowconfigure(0,weight=1)
-                        vendorDN_frame.grid_columnconfigure(0,weight=1)
+                            dcanvas.coords("aicombo2",dwidth/3.00,dheight/1.074)
+                            
+                            dcanvas.coords("aicombo4",dwidth/10.10,dheight/0.604)
+                            dcanvas.coords("aicombo5",dwidth/1.21,dheight/0.604)
+                            dcanvas.coords("aicombo6",dwidth/10.10,dheight/0.562)
+                            dcanvas.coords("aicombo7",dwidth/10.10,dheight/0.526)
+                            dcanvas.coords("aicombo8",dwidth/10.10,dheight/0.496)
+                            dcanvas.coords("aicombo9",dwidth/1.21,dheight/0.562)
+                            dcanvas.coords("aicombo10",dwidth/1.21,dheight/0.526)
+                            dcanvas.coords("aicombo11",dwidth/1.21,dheight/0.496)
 
-                        vendorDN_Scroll = Scrollbar(vendorDN_frame,orient=VERTICAL)
-                        vendorDN_Scroll.grid(row=0,column=1,sticky='ns')
-                        vendorDN_Scroll.config(command=vendorDN_canvas.yview)
+                            dcanvas.coords("aibutton1",dwidth/4.74,dheight/1.295)
+                            dcanvas.coords("aibutton2",dwidth/1.28,dheight/0.377)
+                            dcanvas.coords("aibutton3",dwidth/23,dheight/3.415)
 
-                        vendorDN_canvas.bind("<Configure>", vendorDN_responsive_widgets)
-                        vendorDN_canvas.config(yscrollcommand=vendorDN_Scroll.set)
-                        vendorDN_canvas.grid(row=0,column=0,sticky='nsew')
-                    #---------------------------------------------------------------------------Header File
-                        vendorDN_canvas.create_polygon(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,smooth=True,fill="#1b3857",tags=("vdnpoly1"))
+                            #-------------------------------H Lines-----------------------------------#
+                            dcanvas.coords("ailine1",dwidth/21,dheight/0.645,dwidth/1.055,dheight/0.645)
+                            dcanvas.coords("ailine2",dwidth/21,dheight/0.617,dwidth/1.055,dheight/0.617)
+                            dcanvas.coords("ailine3",dwidth/21,dheight/0.576,dwidth/1.055,dheight/0.576)
+                            dcanvas.coords("ailine4",dwidth/21,dheight/0.536,dwidth/1.055,dheight/0.536)
+                            dcanvas.coords("ailine5",dwidth/21,dheight/0.506,dwidth/1.055,dheight/0.506)
+                            dcanvas.coords("ailine6",dwidth/21,dheight/0.476,dwidth/1.055,dheight/0.476)
+                            #-------------------------------V Lines-----------------------------------#
+                            dcanvas.coords("ailine7",dwidth/21,dheight/0.645,dwidth/21,dheight/0.476)
+                            dcanvas.coords("ailine8",dwidth/1.055,dheight/0.645,dwidth/1.055,dheight/0.476)
+                            dcanvas.coords("ailine9",dwidth/11,dheight/0.645,dwidth/11,dheight/0.476)
+                            dcanvas.coords("ailine10",dwidth/4.15,dheight/0.645,dwidth/4.15,dheight/0.476)
+                            dcanvas.coords("ailine11",dwidth/2.55,dheight/0.645,dwidth/2.55,dheight/0.476)
+                            dcanvas.coords("ailine12",dwidth/1.83,dheight/0.645,dwidth/1.83,dheight/0.476)
+                            dcanvas.coords("ailine13",dwidth/1.58,dheight/0.645,dwidth/1.58,dheight/0.476)
+                            dcanvas.coords("ailine14",dwidth/1.37,dheight/0.645,dwidth/1.37,dheight/0.476)
+                            dcanvas.coords("ailine15",dwidth/1.22,dheight/0.645,dwidth/1.22,dheight/0.476)
 
-                        label_1 = Label(vendorDN_canvas,width=10,height=1,text="Add Vendor", font=('arial 25'),background="#1b3857",fg="white") 
-                        window_label_1 = vendorDN_canvas.create_window(0, 0, anchor="c", window=label_1, tags=("vdnlabel1"))
+                            #-------------------------------V Lines-----------------------------------#
+                            dcanvas.coords("ailine16",dwidth/1.58,dheight/0.455,dwidth/1.58,dheight/0.383)
+                            dcanvas.coords("ailine17",dwidth/1.348,dheight/0.455,dwidth/1.348,dheight/0.383)
+                            dcanvas.coords("ailine18",dwidth/1.084,dheight/0.455,dwidth/1.084,dheight/0.383)
+                            #-------------------------------H Lines-----------------------------------#
+                            dcanvas.coords("ailine19",dwidth/1.58,dheight/0.455,dwidth/1.084,dheight/0.455)
+                            dcanvas.coords("ailine20",dwidth/1.58,dheight/0.383,dwidth/1.084,dheight/0.383)
+                            dcanvas.coords("ailine21",dwidth/1.58,dheight/0.439,dwidth/1.084,dheight/0.439)
+                            dcanvas.coords("ailine22",dwidth/1.58,dheight/0.424,dwidth/1.084,dheight/0.424)
+                            dcanvas.coords("ailine23",dwidth/1.58,dheight/0.41,dwidth/1.084,dheight/0.41)
+                            dcanvas.coords("ailine24",dwidth/1.58,dheight/0.396,dwidth/1.084,dheight/0.396)
 
-                        vendorDN_canvas.create_line(0,0,0,0,fill='gray',width=1,tags=("vdnhline"))
 
-                        vendorDN_canvas.create_polygon(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,smooth=True,fill="#1b3857",tags=("debitNotepoly2"))
                         
-                        def vdn_back_1_():
-                                vendorDN_frame.grid_forget()
+                            
+                        addDN_canvas = Canvas(addDN_frame,height=700,bg='#2f516f',scrollregion=(0,0,700,1200))
+
+                        addDN_frame.grid_rowconfigure(0,weight=1)
+                        addDN_frame.grid_columnconfigure(0,weight=1)
+
+                        vertibar = Scrollbar(addDN_frame,orient=VERTICAL)
+                        vertibar.grid(row=0,column=1,sticky='ns')
+                        vertibar.config(command=addDN_canvas.yview)
+
+                        addDN_canvas.bind("<Configure>", addDN_responsive_widgets)
+                        addDN_canvas.config(yscrollcommand=vertibar.set)
+                        addDN_canvas.grid(row=0,column=0,sticky='nsew')
+                    #---------------------------------------------------------------------------Header File
+                        addDN_canvas.create_polygon(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,smooth=True,fill="#1b3857",tags=("adnpoly1"))
+
+                        label_1 = Label(addDN_canvas,width=50,height=1,text="ADD DEBIT NOTE", font=('arial 25'),background="#1b3857",fg="white") 
+                        window_label_1 = addDN_canvas.create_window(0, 0, anchor="c", window=label_1, tags=("adnlabel1"))
+
+                        addDN_canvas.create_line(0,0,0,0,fill='gray',width=1,tags=("adnhline"))
+
+                        addDN_canvas.create_polygon(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,smooth=True,fill="#1b3857",tags=("adnpoly2"))
+
+                        label_2 = Label(addDN_canvas,width=15,height=1,text="Vendor", font=('arial 12'),background="#1b3857",fg="white") 
+                        window_label_2 = addDN_canvas.create_window(0, 0, anchor="nw", window=label_2, tags=("adnlabel3"))
+                        comb_cus_1 = ttk.Combobox(addDN_canvas, font=('arial 10'))
+                        vendr_sql = "SELECT id FROM auth_user WHERE username=%s"
+                        vendr_val = (nm_ent.get(),)
+                        fbcursor.execute(vendr_sql,vendr_val)
+                        vndr_data = fbcursor.fetchone()
+                        cmpv_sql = "SELECT cid FROM app1_company WHERE id_id=%s"
+                        cmpv_val = (vndr_data[0],)
+                        fbcursor.execute(cmpv_sql,cmpv_val)
+                        cmpv_data = fbcursor.fetchone()
+                        cid_id = cmpv_data[0] 
+                        fbcursor.execute('SELECT * FROM `app1_vendor` where cid_id=%s',[cid_id])
+                        prstreedata=fbcursor.fetchall()
+                        my_list = []
+                        for i in prstreedata:
+                            if True:
+                                n = i[1]+" "+i[2]
+                            else:
+                                pass
+                            my_list.append(n)
+                        comb_cus_1['values'] = my_list
+                        comb_cus_1.current(0)
+                        window_comb_cus_1 = addDN_canvas.create_window(0, 0, anchor="nw", width=245, height=30,window=comb_cus_1, tags=("adncombo1"))
+
+                        label_2 = Label(addDN_canvas,width=15,height=1,text="Email", font=('arial 12'),background="#1b3857",fg="white") 
+                        window_label_2 = addDN_canvas.create_window(0, 0, anchor="nw", window=label_2,tags=('ailabel6'))
+
+                        eaientry_1=Entry(addDN_canvas,width=40,justify=LEFT,background='#2f516f',foreground="white")
+                        window_eaientry_1 = addDN_canvas.create_window(0, 0, anchor="nw", height=30,window=eaientry_1,tags=('aientry1'))
+
+                        label_2 = Label(addDN_canvas,width=15,height=1,text="Billing address", font=('arial 12'),background="#1b3857",fg="white") 
+                        window_label_2 = addDN_canvas.create_window(0,0, anchor="nw", window=label_2,tags=('ailabel9'))
+
+                        
+                        eai_b_entry_1=scrolledtext.ScrolledText(addDN_canvas,width=30,background='#2f516f',foreground="white")
+                        window_eai_b_entry_1 = addDN_canvas.create_window(0, 0, anchor="nw", height=150, window=eai_b_entry_1,tags=('aientry2'))
+
+                        # pre1label_45 = Label(addDN_canvas,width=6,height=1,text="Joining Date", font=('arial 12'),background="#1b3857",fg="white") 
+                        # addDN_canvas.create_window(0,0,anchor="nw",window=pre1label_45,tags=("adnlabel19"))
+                        # pre1entry45= DateEntry(addDN_canvas,width=40,justify=LEFT,background='#2f516f',foreground='white')
+                        # window_pre1entry45 = addDN_canvas.create_window(0,0,anchor='nw',window=pre1entry45,tags=("adnentry2"),height=33)
+
+                        label_2 = Label(addDN_canvas,width=15,height=1,text="Debit Note Date", font=('arial 12'),background="#1b3857",fg="white") 
+                        window_label_2 = addDN_canvas.create_window(0, 0, anchor="nw", window=label_2,tags=('ailabel29'))
+
+
+
+                        label_2 = Label(addDN_canvas,width=12,height=1,text="Place of supply", font=('arial 12'),background="#1b3857",fg="white") 
+                        window_label_2 = addDN_canvas.create_window(0, 0, anchor="nw", window=label_2,tags=('ailabel10'))
+
+                        eai_p_comb_2 = ttk.Combobox(addDN_canvas, font=('arial 10'))
+                        eai_p_comb_2['values'] = ("Kerala","Andaman and Nicobar Islands","Andhra Pradesh","Arunachal Pradesh","Assam","Bihar","Chandigarh","Chhattisgarh","Dadra and Nagar Haveli","Daman and Diu","Delhi","Goa","Gujarat","Haryana","Himachal Pradesh","Jammu and Kashmir","Jharkhand","Karnataka","Ladakh","Lakshadweep","Madhya Pradesh","Maharashtra","Manipur","Meghalaya","Mizoram","Nagaland","Odisha","Puducherry","Punjab","Rajasthan","Sikkim","Tamil Nadu","Telangana","Tripura","Uttar Pradesh","Uttarakhand","West Bengal","Other Territory",)
+                        window_eai_p_comb_2 = addDN_canvas.create_window(0, 0, anchor="nw", width=251, height=30,window=eai_p_comb_2,tags=('aicombo3'))
+
+                        label_2 = Label(addDN_canvas,width=12,height=1,text="Bill Number", font=('arial 12'),background="#1b3857",fg="white") 
+                        window_label_2 = addDN_canvas.create_window(0, 0, anchor="nw", window=label_2,tags=('adnlabelbill'))
+
+                        eai_p_comb_3 = ttk.Combobox(addDN_canvas, font=('arial 10'))
+                        eai_p_comb_3['values'] = ("1001","1002","1003","1004",)
+                        window_eai_p_comb_3 = addDN_canvas.create_window(0, 0, anchor="nw", width=251, height=30,window=eai_p_comb_3,tags=('adncombobill'))
+
+                        addDN_canvas.create_line(0,0,0,0,fill='gray',width=1,tags=("adnhlineitem"))
+
+                        label_x = Label(addDN_canvas,width=30,height=1,text="Item Details", font=('arial 18'),background="#1b3857",fg="white") 
+                        window_label_x = addDN_canvas.create_window(-300, 0, anchor="nw", window=label_x, tags=("adnlabelitem"))
+
+                        addDN_canvas.create_line(0, 0, 0, 0, fill='gray',width=1, tags=('ailine1'))
+                        addDN_canvas.create_line(0, 0, 0, 0, fill='gray',width=1, tags=('ailine2'))
+                        addDN_canvas.create_line(0, 0, 0, 0, fill='gray',width=1, tags=('ailine3'))
+                        addDN_canvas.create_line(0, 0, 0, 0, fill='gray',width=1, tags=('ailine4'))
+                        addDN_canvas.create_line(0, 0, 0, 0, fill='gray',width=1, tags=('ailine5'))
+                        addDN_canvas.create_line(0, 0, 0, 0, fill='gray',width=1, tags=('ailine6'))
+                        addDN_canvas.create_line(0, 0, 0, 0, fill='gray',width=1, tags=('ailine7'))
+                        addDN_canvas.create_line(0, 0, 0, 0, fill='gray',width=1, tags=('ailine8'))
+                        addDN_canvas.create_line(0, 0, 0, 0, fill='gray',width=1, tags=('ailine9'))
+                        addDN_canvas.create_line(0, 0, 0, 0, fill='gray',width=1, tags=('ailine10'))
+                        addDN_canvas.create_line(0, 0, 0, 0, fill='gray',width=1, tags=('ailine11'))
+                        addDN_canvas.create_line(0, 0, 0, 0, fill='gray',width=1, tags=('ailine12'))
+                        addDN_canvas.create_line(0, 0, 0, 0, fill='gray',width=1, tags=('ailine13'))
+                        addDN_canvas.create_line(0, 0, 0, 0, fill='gray',width=1, tags=('ailine14'))
+                        addDN_canvas.create_line(0, 0, 0, 0, fill='gray',width=1, tags=('ailine15'))
+
+
+                        label_2 = Label(addDN_canvas,width=2,height=1,text="#", font=('arial 10'),background="#1b3857",fg="white") 
+                        window_label_2 = addDN_canvas.create_window(0, 0, anchor="nw", window=label_2,tags=('ailabel11'))
+
+                        label_3 = Label(addDN_canvas,width=15,height=1,text="Item", font=('arial 10'),background="#1b3857",fg="white") 
+                        window_label_3 = addDN_canvas.create_window(0, 0, anchor="nw", window=label_3,tags=('ailabel12'))
+
+                        label_4 = Label(addDN_canvas,width=4,height=1,text="HSN", font=('arial 10'),background="#1b3857",fg="white") 
+                        window_label_4 = addDN_canvas.create_window(0, 0, anchor="nw", window=label_4,tags=('ailabel13'))
+
+                        label_4 = Label(addDN_canvas,width=11,height=1,text="Quantity", font=('arial 10'),background="#1b3857",fg="white") 
+                        window_label_4 = addDN_canvas.create_window(0, 0, anchor="nw", window=label_4,tags=('ailabel14'))
+
+                        label_4 = Label(addDN_canvas,width=4,height=1,text="Price", font=('arial 10'),background="#1b3857",fg="white") 
+                        window_label_4 = addDN_canvas.create_window(0, 0, anchor="nw", window=label_4,tags=('ailabel15'))
+
+                        label_4 = Label(addDN_canvas,width=8,height=1,text="Total", font=('arial 10'),background="#1b3857",fg="white") 
+                        window_label_4 = addDN_canvas.create_window(0, 0, anchor="nw", window=label_4,tags=('ailabel16'))
+
+                        label_4 = Label(addDN_canvas,width=7,height=1,text="TAX (%)", font=('arial 10'),background="#1b3857",fg="white") 
+                        window_label_4 = addDN_canvas.create_window(0, 0, anchor="nw", window=label_4,tags=('ailabel18'))
+
+
+
+                        addDN_canvas.create_line(0, 0, 0, 0, fill='gray',width=1, tags=('ailine16'))
+                        addDN_canvas.create_line(0, 0, 0, 0, fill='gray',width=1, tags=('ailine17'))
+                        addDN_canvas.create_line(0, 0, 0, 0, fill='gray',width=1, tags=('ailine18'))
+                        addDN_canvas.create_line(0, 0, 0, 0, fill='gray',width=1, tags=('ailine19'))
+                        addDN_canvas.create_line(0, 0, 0, 0, fill='gray',width=1, tags=('ailine20'))
+                        addDN_canvas.create_line(0, 0, 0, 0, fill='gray',width=1, tags=('ailine21'))
+                        addDN_canvas.create_line(0, 0, 0, 0, fill='gray',width=1, tags=('ailine22'))
+                        addDN_canvas.create_line(0, 0, 0, 0, fill='gray',width=1, tags=('ailine23'))
+                        addDN_canvas.create_line(0, 0, 0, 0, fill='gray',width=1, tags=('ailine24'))
+                        
+
+                        label_5 = Label(addDN_canvas,width=10,height=1,text="Sub Total", font=('arial 10'),background="#1b3857",fg="white") 
+                        window_label_5 = addDN_canvas.create_window(0, 0, anchor="nw", window=label_5,tags=('ailabel23'))
+
+                        label_5 = Label(addDN_canvas,width=12,height=1,text="Tax Amount", font=('arial 10'),background="#1b3857",fg="white") 
+                        window_label_5 = addDN_canvas.create_window(0, 0, anchor="nw", window=label_5,tags=('ailabel24'))
+
+                        label_5 = Label(addDN_canvas,width=12,height=1,text="Grand Total", font=('arial 10'),background="#1b3857",fg="white") 
+                        window_label_5 = addDN_canvas.create_window(0, 0, anchor="nw", window=label_5,tags=('ailabel25'))
+
+                        label_5 = Label(addDN_canvas,width=12,height=1,text="Amount Received", font=('arial 10'),background="#1b3857",fg="white") 
+                        window_label_5 = addDN_canvas.create_window(0, 0, anchor="nw", window=label_5,tags=('ailabel26'))
+
+                        label_5 = Label(addDN_canvas,width=12,height=1,text="Balance Due", font=('arial 10'),background="#1b3857",fg="white") 
+                        window_label_5 = addDN_canvas.create_window(0, 0, anchor="nw", window=label_5,tags=('ailabel27'))
+
+                        esub_str=StringVar()
+                        esub_entry_1=Entry(addDN_canvas,width=36,justify=LEFT,background='#2f516f',foreground="white",textvariable=esub_str)
+                        window_esub_entry_1 = addDN_canvas.create_window(0, 0, anchor="nw", height=30, window=esub_entry_1,tags=('aientry23'))
+                        
+
+                        etax_str=StringVar()
+                        etax_entry_1=Entry(addDN_canvas,width=36,justify=LEFT,background='#2f516f',foreground="white",textvariable=etax_str)
+                        window_etax_entry_1 = addDN_canvas.create_window(0, 0, anchor="nw", height=30, window=etax_entry_1,tags=('aientry24'))
+                        
+
+                        egrd_str=StringVar()
+                        egrand_entry_1=Entry(addDN_canvas,width=36,justify=LEFT,background='#2f516f',foreground="white",textvariable=egrd_str)
+                        window_egrand_entry_1 = addDN_canvas.create_window(0, 0, anchor="nw", height=30, window=egrand_entry_1,tags=('aientry25'))
+                        
+                        eamount_entry_1=Entry(addDN_canvas,width=36,justify=LEFT,background='#2f516f',foreground="white")
+                        window_eamount_entry_1 = addDN_canvas.create_window(0, 0, anchor="nw", height=30, window=eamount_entry_1,tags=('aientry26'))
+                        
+
+                        ebal_entry_1=Entry(addDN_canvas,width=36,justify=LEFT,background='#2f516f',foreground="white")
+                        window_ebal_entry_1 = addDN_canvas.create_window(0, 0, anchor="nw", height=30, window=ebal_entry_1,tags=('aientry27'))
+                        
+                        
+
+                        eai_save_btn1=Button(addDN_canvas,text='Save', width=15,height=2,foreground="white",background="#1b3857",font='arial 12',command=add_DN)
+                        window_eai_save_btn1 = addDN_canvas.create_window(0, 0, anchor="nw", window=eai_save_btn1,tags=('aibutton2'))
+
+
+
+                        
+                        def adn_back_1_():
+                                addDN_frame.grid_forget()
                                 main_frame_debitNote.grid(row=0,column=0,sticky='nsew')
 
-                        vdn_bck_btn1=Button(vendorDN_canvas,text='← Back', bd=0, foreground="white",background="#2f516f",font='arial 10 bold',activebackground="#1b3857",command=vdn_back_1_)
-                        window_vdn_bck_btn1 = vendorDN_canvas.create_window(0, 0, anchor="nw", window=ac_bck_btn1,tags=('vdnbutton1'))
+                        adn_bck_btn1=Button(addDN_canvas,text='← Back', bd=0, foreground="white",background="#2f516f",font='arial 10 bold',activebackground="#1b3857",command=adn_back_1_)
+                        window_adn_bck_btn1 = addDN_canvas.create_window(0, 0, anchor="nw", window=adn_bck_btn1,tags=('adnbutton1'))
                     
-                    btn1=Button(debitNote_canvas,text='Add Vendor', width=20,height=2,foreground="white",background="#1b3857",font='arial 12',command=add_VendorDN)
+                    btn1=Button(debitNote_canvas,text='New', width=20,height=2,foreground="white",background="#1b3857",font='arial 12',command=add_DN)
                     window_btn1 = debitNote_canvas.create_window(0, 0, anchor="nw", window=btn1, tags=("vnbutton2"))
                    
                     #333333333333333333333333333333333333333333333333333333333333333333333333333333333333333{Report Tab}
