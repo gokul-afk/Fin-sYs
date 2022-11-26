@@ -27642,6 +27642,10 @@ def main_sign_in():
                         dcanvas.coords("debitNotelabel1_1",dwidth/1.999,dheight/7.00)
                         dcanvas.coords("debittree1",dwidth/2,dheight/1.8)
                         dcanvas.coords("vnbutton2",dwidth/1.59,dheight/2.4)
+
+                        dcanvas.coords("searchbutton2",dwidth/3,dheight/2.4)
+                        dcanvas.coords("seacrhentry3",dwidth/13,dheight/2.4)
+                        
                         dcanvas.coords("vnbutton3",dwidth/1.26,dheight/2.4)
 
                         r2 = 25
@@ -27794,7 +27798,7 @@ def main_sign_in():
                             x11 = dwidth/63
                             x21 = dwidth/1.021
                             y11 = dheight/2.8
-                            y21 = dheight/0.45
+                            y21 = dheight/0.4
 
 
                             dcanvas.coords("adnpoly2",x11 + r2,y11,
@@ -27822,6 +27826,7 @@ def main_sign_in():
                             x11,y11,
                             )
 
+                            dcanvas.coords("adnbutton1",dwidth/23,dheight/3.415)
                             dcanvas.coords("adnbutton1",dwidth/23,dheight/3.415)
                             dcanvas.coords("adnlabel3",dwidth/18.5,dheight/2.5)
                             dcanvas.coords("adncombo1",dwidth/18.5,dheight/2.1)
@@ -28938,12 +28943,100 @@ def main_sign_in():
                     
                     btn1=Button(debitNote_canvas,text='New', width=20,height=2,foreground="white",background="#1b3857",font='arial 12',command=add_DN)
                     window_btn1 = debitNote_canvas.create_window(0, 0, anchor="nw", window=btn1, tags=("vnbutton2"))
+                    
+
+
+                    
+                    search_entry=Entry(debitNote_canvas,width=50,justify=LEFT,background='#2f516f',foreground="white")
+                    window_search_entry = debitNote_canvas.create_window(0, 0, anchor="nw", height=45,window=search_entry, tags=('seacrhentry3'))
+
+                    def searchitem():
+                        searchkey = search_entry.get()
+                        print(searchkey)
+
+                        sql_pr="select * from auth_user where username=%s"
+                        sql_pr_val=(nm_ent.get(),)
+                        fbcursor.execute(sql_pr,sql_pr_val,)
+                        pr_dtl=fbcursor.fetchone()
+
+                        c_sql_1 = "SELECT * FROM app1_debitnote where usr_id=%s"
+                        c_val_1 = (dn_dtl[0],)
+                        fbcursor.execute(c_sql_1,c_val_1,)
+                        s_data_1 = fbcursor.fetchall()
+
+                        for i in debitNote_tree.get_children():
+                            debitNote_tree.delete(i)
+
+                        count0 = 0
+                        for i in s_data_1:
+                            if True:
+                                whole = i[1]+i[2]+i[5]+i[11]+i[13]
+                                if searchkey in whole:
+                                    debitNote_tree.insert(parent='',index='end',iid=i,text='',values=(i[5],i[1],i[2],i[13],i[11]))  
+
+                                
+                            else:
+                                pass
+                        count0 += 1
+
+
+
+
+
+                    searchbtn=Button(debitNote_canvas,text='Search', width=8,height=2,foreground="white",background="#1b3857",font='arial 12',command=searchitem)
+                    window_searchbtn = debitNote_canvas.create_window(0, 0, anchor="nw", window=searchbtn, tags=("searchbutton2"))
+
+                    def action_debitNote(event):
+                        if debitnote_comb_1.get( )=="Delete":
+                            DN_del = messagebox.askyesno("Delete Debit Note","Are you sure to delete this Debit Note?")
+
+                        if DN_del == True:
+                            DN_id_1 = debitNote_tree.item(debitNote_tree.focus())["values"][1]
+
+                            sql_dn="select * from auth_user where username=%s"
+                            sql_dn_val=(nm_ent.get(),)
+                            fbcursor.execute(sql_dn,sql_dn_val,)
+                            dn_dtl=fbcursor.fetchone()
+
+
+                            c_sql_1 = "DELETE from app1_debitnote where usr_id=%s and noteno=%s "
+                            c_val_1 = (dn_dtl[0],DN_id_1)
+                            fbcursor.execute(c_sql_1,c_val_1,)
+                            finsysdb.commit()
+
+                            #----------Refresh Insert Tree--------#
+
+                            for record in debitNote_tree.get_children():
+                                    debitNote_tree.delete(record)
+
+                            sql_pr="select * from auth_user where username=%s"
+                            sql_pr_val=(nm_ent.get(),)
+                            fbcursor.execute(sql_pr,sql_pr_val,)
+                            pr_dtl=fbcursor.fetchone()
+
+                            c_sql_1 = "SELECT * FROM app1_debitnote where usr_id=%s"
+                            c_val_1 = (dn_dtl[0],)
+                            fbcursor.execute(c_sql_1,c_val_1,)
+                            c_data_1 = fbcursor.fetchall()
+
+                            count0 = 0
+                            for i in c_data_1:
+                                if True:
+                                    debitNote_tree.insert(parent='',index='end',iid=i,text='',values=(i[5],i[1],i[2],i[13],i[11])) 
+                                    
+                                else:
+                                    pass
+                            count0 += 1
+
+                        else:
+                            pass
+
 
                     debitnote_comb_1 = ttk.Combobox(debitNote_canvas,font=('arial 18'),justify='center')
                     debitnote_comb_1['values'] = ("Actions","Edit","Delete")
                     debitnote_comb_1.current(0)
                     window_debitnote_comb_1 = debitNote_canvas.create_window(0, 0, anchor="nw", width=140,height=45,window=debitnote_comb_1,tags=('vnbutton3'))
-                    # debitnote_comb_1.bind("<<ComboboxSelected>>",edit_delete_customer)
+                    debitnote_comb_1.bind("<<ComboboxSelected>>",action_debitNote)
                     
 
                    
