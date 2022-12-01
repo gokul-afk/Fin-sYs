@@ -1,1 +1,1 @@
-                        label_1 = Label(addDN_canvas,width=50,height=1,text="ADD DEBIT NOTE", font=('arial 25'),background="#1b3857",fg="white") 
+ai_comb_p_1_2.bind('<<ComboboxSelected>>', findalltotaleve)
